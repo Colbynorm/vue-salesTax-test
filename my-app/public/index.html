@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<style>
+  #app {
+    background-color: beige;
+  }
+</style>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>
+          <v-card
+            elevation="24"
+          >
+            <v-card-title>Sales Tax Project</v-card-title>
+            <v-card-text>
+              <div>
+                <v-row>
+                  <v-col cols="12" sm="12" md="12">
+                    <v-card
+                      elevation="24"
+                    >
+                      <v-card-title>Items And Total</v-card-title>
+                      <v-card-text>
+                        <v-row>
+                          <v-col cols="6" sm="6" md="6">
+                            <div>
+                              <v-btn 
+                                v-for="(item, index) in items" 
+                                :key="item.id"
+                                @click="addTotal(index)"
+                                v-model="addedItems"
+                              >
+                                {{ item.text }} {{ item.value }}
+                              </v-btn>
+                            </div>
+                          </v-col>
+                          <v-col cols="6" sm="6" md="6">
+                            <h3>Total</h3>
+                            <v-row>
+                              <v-col cols="4" sm="4" md="4">
+                                <p>Item Price</p>
+                                <v-text-field
+                                  disabled
+                                  solo
+                                  outlined
+                                  dense
+                                  filled
+                                  v-model="itemTotals"
+                                > {{ addedItems }}</v-text-field>
+                              </v-col>
+                              <v-col cols="4" sm="4" md="4">
+                                <p>Sales Tax</p>
+                                <v-text-field
+                                  disabled
+                                  solo
+                                  outlined
+                                  dense
+                                  filled
+                                  v-model="salesTax"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col cols="4" sm="4" md="4">
+                                <p>Total</p>
+                                <v-text-field
+                                  disabled
+                                  solo
+                                  outlined
+                                  dense
+                                  filled
+                                  v-model="saleTotal"
+                                ></v-text-field>
+                              </v-col>
+                            </v-row>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          bookBtn: 12.49,
+          cdBtn: 14.99,
+          chocolateBtn: .85,
+          salesTax: 0,
+          saleTotal: 0,
+          itemTotals: [],
+
+          //combobox
+          items: [
+            { text: 'Book', value: 12.49 },
+            { text: 'CD', value: 14.99 },
+            { text: 'Chocolate Bar', value: 0.85 }
+          ],
+          cart: [],
+          combinedPrice: 0
+        }
+      },
+      methods: {
+        addTotal(index, combinedPrice) {
+          //this gets the value of each selected item
+          selectedItem = this.items[index].value;
+          console.log(selectedItem);
+
+          //this pushes into the cart
+          this.cart.push(selectedItem);
+          console.log(this.cart)
+
+          //this add total in cart
+          var itemPrice = 0;
+          for(var i = 0; i < this.cart.length; i++){
+            itemPrice += this.cart[i];
+          }
+          console.log(itemPrice);
+        }
+      }
+    })
+  </script>
+</body>
+</html>
